@@ -1,3 +1,18 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'  # Reemplace con el ID de su GPU si es necesario
+import tensorflow as tf
+
+if tf.config.experimental.list_physical_devices('GPU'):
+    print('GPU(s) detected!')
+else:
+    print('No GPU found.')
+
+# Ahora puede usar TensorFlow con la GPU
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+assert len(physical_devices) > 0
+for device in physical_devices:
+    tf.config.experimental.set_memory_growth(device, True)
+
 import tensorflow as tf
 import pandas as pd
 import numpy as np
@@ -67,10 +82,10 @@ model.evaluate(X_test, y_test)
 y_pred = model.predict(X_test)
 y_pred_bin = np.round(y_pred)
 
-#accuracy = accuracy_score(y_test, y_pred_bin)
+accuracy = accuracy_score(y_test, y_pred_bin)
 #recall = recall_score(y_test, y_pred_bin)
 #precision = precision_score(y_test, y_pred_bin)
 
-#print("Acierto:", accuracy)
+print("Acierto:", accuracy)
 #print("Recuerdo:", recall)
 #print("Precisión:", precision)
